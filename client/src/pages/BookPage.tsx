@@ -45,7 +45,7 @@ export function BookPage() {
             <Icon d={icons.clock} /> 15–90 minute sessions
           </li>
           <li>
-            <Icon d={icons.video} /> Video call, link sent by email
+            <Icon d={icons.video} /> 1:1 video call with your coach
           </li>
           <li>
             <Icon d={icons.globe} /> Times shown in {timeZone.replace(/_/g, ' ')}
