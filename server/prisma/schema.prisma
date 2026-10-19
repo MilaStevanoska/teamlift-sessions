@@ -1,0 +1,35 @@
+generator client {
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  moduleFormat           = "esm"
+  importFileExtension    = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// A coaching session the instructor has opened up for booking.
+model Slot {
+  id              String   @id @default(cuid())
+  startsAt        DateTime @db.Timestamptz(3)
+  durationMinutes Int
+  createdAt       DateTime @default(now()) @db.Timestamptz(3)
+  booking         Booking?
+
+  @@index([startsAt])
+}
+
+/// An AI Champion's reservation of a slot.
+/// `slotId` is unique, so the database itself guarantees one booking per slot.
+model Booking {
+  id                  String   @id @default(cuid())
+  slotId              String   @unique
+  slot                Slot     @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  name                String
+  email               String
+  focus               String
+  note                String?
+  confirmationMessage String?
+  createdAt           DateTime @default(now()) @db.Timestamptz(3)
+}
