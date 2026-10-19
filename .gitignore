@@ -15,4 +15,6 @@ server/src/generated/
 
 # Local tooling
 .claude/
+.mcp.json
+skills-lock.json
 *.tsbuildinfo
