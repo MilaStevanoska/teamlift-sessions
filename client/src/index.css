@@ -702,6 +702,19 @@ textarea {
   padding: 16px 0;
 }
 
+.email-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.email-note svg {
+  flex: none;
+}
+
 .confirmed > .btn {
   margin-top: 8px;
 }

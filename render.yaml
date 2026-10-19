@@ -20,3 +20,7 @@ services:
         sync: false
       - key: GEMINI_MODEL
         value: gemini-flash-latest
+      - key: BREVO_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        sync: false

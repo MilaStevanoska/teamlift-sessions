@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsTimeZone,
   MaxLength,
 } from 'class-validator';
 import { FOCUS_AREAS } from '../../common/session-options.js';
@@ -38,4 +39,9 @@ export class CreateBookingDto {
   @IsString()
   @MaxLength(500)
   note?: string;
+
+  /** IANA time zone of the person booking, used to format the email. */
+  @IsOptional()
+  @IsTimeZone()
+  timeZone?: string;
 }

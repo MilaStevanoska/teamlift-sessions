@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { GoogleGenAI } from '@google/genai';
+import { formatWhen } from '../common/format-when.js';
 import type { Booking, Slot } from '../generated/prisma/client.js';
 
 export type Confirmation = { message: string; source: 'ai' | 'fallback' };
@@ -53,18 +54,6 @@ export class TeamoService {
       return fallback;
     }
   }
-}
-
-function formatWhen(date: Date, timeZone: string) {
-  return date.toLocaleString('en-US', {
-    timeZone,
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    timeZoneName: 'short',
-  });
 }
 
 function fallbackMessage(booking: Booking, when: string) {

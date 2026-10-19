@@ -1,3 +1,5 @@
+import { timeZone } from './lib/dates';
+
 const API_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 
 export type Slot = {
@@ -18,7 +20,7 @@ export type HostSlot = Slot & {
   } | null;
 };
 
-export type Options = { durations: number[]; focusAreas: string[] };
+export type Options = { durations: number[]; focusAreas: string[]; emailEnabled: boolean };
 
 export type NewBooking = {
   slotId: string;
@@ -31,6 +33,7 @@ export type NewBooking = {
 export type Booking = {
   id: string;
   name: string;
+  email: string;
   focus: string;
   startsAt: string;
   durationMinutes: number;
@@ -77,10 +80,7 @@ export const api = {
   createSlots: (input: { startsAt: string; durationMinutes: number; count: number }) =>
     request<Slot[]>('/slots', post(input)),
   deleteSlot: (id: string) => request<void>(`/slots/${id}`, { method: 'DELETE' }),
-  book: (input: NewBooking) => request<Booking>('/bookings', post(input)),
+  book: (input: NewBooking) => request<Booking>('/bookings', post({ ...input, timeZone })),
   confirmation: (bookingId: string) =>
-    request<Confirmation>(
-      `/bookings/${bookingId}/confirmation`,
-      post({ timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone }),
-    ),
+    request<Confirmation>(`/bookings/${bookingId}/confirmation`, post({ timeZone })),
 };

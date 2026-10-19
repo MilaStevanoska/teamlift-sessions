@@ -63,6 +63,7 @@ export function BookPage() {
         ) : step.name === 'done' ? (
           <Confirmed
             booking={step.booking}
+            emailEnabled={options?.emailEnabled ?? false}
             onAgain={() => setStep({ name: 'pick' })}
           />
         ) : step.name === 'details' && options ? (
@@ -302,7 +303,15 @@ function DetailsForm({
   );
 }
 
-function Confirmed({ booking, onAgain }: { booking: Booking; onAgain: () => void }) {
+function Confirmed({
+  booking,
+  emailEnabled,
+  onAgain,
+}: {
+  booking: Booking;
+  emailEnabled: boolean;
+  onAgain: () => void;
+}) {
   return (
     <div className="confirmed">
       <div className="check" aria-hidden="true">
@@ -313,6 +322,11 @@ function Confirmed({ booking, onAgain }: { booking: Booking; onAgain: () => void
         {formatLongDay(booking.startsAt)} at {formatTime(booking.startsAt)} ·{' '}
         {booking.durationMinutes} min · {booking.focus}
       </p>
+      {emailEnabled && (
+        <p className="email-note">
+          <Icon d={icons.mail} size={16} /> Confirmation sent to <b>{booking.email}</b>
+        </p>
+      )}
       <TeamoNote bookingId={booking.id} />
       <button className="btn btn-secondary" onClick={onAgain}>
         Book another session

@@ -9,10 +9,13 @@ export class BookingsController {
 
   @Post()
   async create(@Body() dto: CreateBookingDto) {
-    const { id, name, focus, slot } = await this.bookings.create(dto);
+    const { id, name, email, focus, slot } = await this.bookings.create(dto);
+    // Not awaited: the booker gets their response without waiting on email.
+    void this.bookings.sendConfirmationEmail(id, dto.timeZone);
     return {
       id,
       name,
+      email,
       focus,
       startsAt: slot.startsAt,
       durationMinutes: slot.durationMinutes,
